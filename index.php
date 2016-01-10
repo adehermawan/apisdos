@@ -7,6 +7,7 @@
  * PSR-4 autoloader.
  */
 require 'vendor/autoload.php';
+require 'connect.php';
 
 /**
  * Step 2: Instantiate a Slim application
@@ -36,6 +37,15 @@ $app->get('/hello[/{name}]', function ($request, $response, $args) {
     return $response;
 })->setArgument('name', 'World!');
 
+$app->get("/user",function() use ($app,$db){
+foreach ($db->tbl_adik as $value) {
+  $users["response"][]=array(
+    'id' =>$value["id"],
+    'name'=>$value["name"]
+   );
+}
+  echo json_encode($users);
+});
 /**
  * Step 4: Run the Slim application
  *
